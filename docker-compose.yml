@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  lwtw:
+    build: .
+    image: lwtw
+    container_name: lwtw
+    ports:
+      - "4567:4567"
+  

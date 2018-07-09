@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <style type="text/css">
+            table caption {
+                caption-side: top;
+            }
+        </style>
+        <script>
+        $(function() {
+            loadTable('/most_relevants', '#most_relevants', (key, data)=> data[key]);
+            loadTable('/most_mentions', '#most_mentions', (key, data) => data[key][0]);
+
+
+            function loadTable(url, selector, itemStrategy) {
+                $.get(url, function(data) {                    
+                    let tbody = $(selector + ' tbody')
+                    fillTBody(data, tbody, itemStrategy);
+                });
+            }
+
+            function fillTBody(data, tbody, itemStrategy) {                
+                for(var key in data) {
+                    let item = itemStrategy(key, data);
+                    $('<tr>')
+                        .append($('<td>').text(item['screen_name']))
+                        .append($('<td>').text(item['followers_count']))
+                        .append($('<td>').text(item['retweet_count']))
+                        .append($('<td>').text(item['favorite_count']))
+                        .append($('<td>').text(item['text']))
+                        .append($('<td>').text(item['created_at']))
+                        .append($('<td>').text(item['profile_link']))
+                        .append($('<td>').text(item['link']))
+                    .appendTo(tbody);
+                };
+            }
+        });     
+        </script>
+    </head>
+    <body>
+        <table id="most_relevants" class="table">
+            <caption><h1>Mais relevantes</h1></caption>
+            <thead>
+                <tr>
+                    <th>Usu&aacute;rio</th>
+                    <th>N&uacute;mero de seguidores do autor</th>
+                    <th>N&uacute;mero de retweets</th>
+                    <th>N&uacute;mero favorites do tweet</th>
+                    <th>Conte&uacute;do do tweet</th>
+                    <th>Data e hora</th>
+                    <th>Link para o perfil</th>
+                    <th>Link para o tweet</th>
+                </tr>
+            </thead>
+            <tbody>                
+            </tbody>
+        </table>
+        <table id="most_mentions" class="table">
+            <caption><h1>Mais men&ccedil;&otilde;es</h1></caption>
+            <thead>
+                <tr>
+                    <th>Usu&aacute;rio</th>
+                    <th>N&uacute;mero de seguidores do autor</th>
+                    <th>N&uacute;mero de retweets</th>
+                    <th>N&uacute;mero favorites do tweet</th>
+                    <th>Conte&uacute;do do tweet</th>
+                    <th>Data e hora</th>
+                    <th>Link para o perfil</th>
+                    <th>Link para o tweet</th>
+                </tr>
+            </thead>
+            <tbody>                
+            </tbody>
+        </table>
+    </body>
+</html>
